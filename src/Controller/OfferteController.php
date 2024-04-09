@@ -7,12 +7,14 @@ use Twig\Environment;
 use Veldsink\EventSourcing\Offerte\Model\Offerte;
 use Veldsink\EventSourcing\Offerte\Model\ProductType;
 use Veldsink\EventSourcing\Offerte\Repository\EventSourcedOfferteRepository;
+use Veldsink\EventSourcing\Resource\ProductRapportage\Repository\ProductRepository;
 
 class OfferteController
 {
     public function __construct(
         private readonly Environment $twig,
         private readonly EventSourcedOfferteRepository $offerteRepository,
+        private readonly ProductRepository $productRepository,
     ) {}
 
     public function getOfferte(Uuid $offerteUuid)
@@ -42,6 +44,14 @@ class OfferteController
 
         return $this->twig->render('offerte_created.twig', [
             'uuid' => $offerte->domainUuid,
+        ]);
+    }
+
+    public function getProductRapportage()
+    {
+        $products = $this->productRepository->getProducts();
+        return $this->twig->render('product_rapportage.twig', [
+            'products' => $products,
         ]);
     }
 }

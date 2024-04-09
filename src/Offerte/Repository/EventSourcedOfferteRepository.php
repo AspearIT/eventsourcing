@@ -3,6 +3,7 @@
 namespace Veldsink\EventSourcing\Offerte\Repository;
 
 use Symfony\Component\Uid\Uuid;
+use Veldsink\EventSourcing\Eventbus;
 use Veldsink\EventSourcing\EventReplay;
 use Veldsink\EventSourcing\EventStorage;
 use Veldsink\EventSourcing\Offerte\Event\OfferteCreated;
@@ -13,6 +14,7 @@ class EventSourcedOfferteRepository
 {
     public function __construct(
         private readonly EventStorage $eventStore,
+        private readonly Eventbus $eventbus,
     ) {}
 
     public function getOfferte(Uuid $offerteUuid): Offerte
@@ -40,6 +42,7 @@ class EventSourcedOfferteRepository
     {
         foreach ($offerte->popNewEvents() as $event) {
             $this->eventStore->saveEvent($event);
+            $this->eventbus->dispatch($event);
         }
     }
 }

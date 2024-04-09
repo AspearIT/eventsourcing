@@ -5,8 +5,11 @@ use Symfony\Component\Uid\Uuid;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Veldsink\EventSourcing\Controller\OfferteController;
+use Veldsink\EventSourcing\Eventbus;
 use Veldsink\EventSourcing\EventStorage;
 use Veldsink\EventSourcing\Offerte\Repository\EventSourcedOfferteRepository;
+use Veldsink\EventSourcing\Resource\ProductRapportage\Listener\ProductRapportageListener;
+use Veldsink\EventSourcing\Resource\ProductRapportage\Repository\ProductRepository;
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -16,7 +19,11 @@ $controller = new OfferteController(
     $twig,
     new EventSourcedOfferteRepository(
         new EventStorage(),
+        new Eventbus(
+            new ProductRapportageListener(),
+        ),
     ),
+    new ProductRepository(),
 );
 
 try {
@@ -27,6 +34,9 @@ try {
             break;
         case '/offerte/init':
             $response = $controller->createOfferte();
+            break;
+        case '/product/rapportage':
+            $response = $controller->getProductRapportage();
             break;
         default:
             if (preg_match('#offerte/([a-f0-9-]+)#', $path, $matches)) {
