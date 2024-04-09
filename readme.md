@@ -5,6 +5,7 @@
 ```
 docker compose up -d
 docker compose run web composer install
+mkdir data
 sudo chmod -R 777 data
 ```
 
