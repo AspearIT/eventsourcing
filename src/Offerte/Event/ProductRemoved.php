@@ -18,4 +18,9 @@ readonly class ProductRemoved extends Event
             ],
         );
     }
+
+    public function getProductUuid(): Uuid
+    {
+        return Uuid::fromString($this->payload['productUuid']);
+    }
 }
