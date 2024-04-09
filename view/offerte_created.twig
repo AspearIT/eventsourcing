@@ -1,0 +1,11 @@
+{% extends 'main.twig' %}
+
+{% block content %}
+    <div class="container">
+        Offerte aangemaakt met nummer: {{ uuid }}
+        <br/><br/>
+        <a href="/offerte/{{ uuid }}">
+            Klik hier om naar de offerte te gaan
+        </a>
+    </div>
+{% endblock %}

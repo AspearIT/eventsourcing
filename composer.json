@@ -1,0 +1,15 @@
+{
+  "require": {
+    "php": "^8.3",
+    "symfony/uid": "^7.0",
+    "twig/twig": "^3.8"
+  },
+  "require-dev": {
+    "larapack/dd": "^1.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Veldsink\\EventSourcing\\": "src/"
+    }
+  }
+}

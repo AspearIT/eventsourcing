@@ -1,0 +1,33 @@
+{% extends 'main.twig' %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <b>
+                    Offerte:
+                </b>
+            </div>
+            <div class="col-6">
+                {{ offerte.domainUuid }}
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-12">
+                <b>
+                    Producten:
+                </b>
+            </div>
+        </div>
+        {% for product in offerte.producten %}
+            <div class="row">
+                <div class="col-6">
+                    {{ product.productType.value|capitalize }}
+                </div>
+                <div class="col-6">
+                    {{ product.getMaandbedrag() }}
+                </div>
+            </div>`
+        {% endfor %}
+    </div>
+{% endblock %}
